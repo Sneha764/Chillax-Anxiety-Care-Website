@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anxiety Prediction</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(#709bb7);
+            margin: 0;
+            padding: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        
+        form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+            margin: 0 auto; /* ensures equal left/right spacing */
+        }
+
+        label {
+            font-weight: bold;
+        }
+        p {
+            font-size: 12px;
+            color: #666;
+            margin: 0 0 1px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 4px 0 10px 0; 
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Anxiety Prediction Form</h2>
+    <form action="/submit" method="post">
+        <label>Age:</label>
+        <input type="number" name="age" min="0" max="200" required>
+
+        <label>Self-Esteem:</label>
+        <p>0 = Very low confidence, 10 = Very high confidence</p>
+        <input type="number" name="self_esteem" min="0" max="10" required>
+
+        <label>Mental Health History:</label>
+        <p>0 = No history, 10 = Severe mental health issues</p>
+        <input type="number" name="mental_health_history" min="0" max="10" required>
+
+        <label>Depression:</label>
+        <p>0 = No depression, 10 = Severe depression</p>
+        <input type="number" name="depression" min="0" max="10" required>
+
+        <label>Headache (ACI):</label>
+        <p>0 = No headaches, 10 = Frequent severe headaches</p>
+        <input type="number" name="headache" min="0" max="10" required>
+
+        <label>Blood Pressure (BPSI):</label>
+        <p>0 = Normal, 10 = High fluctuations</p>
+        <input type="number" name="blood_pressure" min="0" max="10" required>
+
+        <label>Sleep Quality (SQAS):</label>
+        <p>0 = Best sleep, 10 = Worst sleep</p>
+        <input type="number" name="sleep_quality" min="0" max="10" required>
+
+        <label>Breathing Problem (BHI):</label>
+        <p>0 = No issues, 10 = Frequent difficulty breathing</p>
+        <input type="number" name="breathing_problem" min="0" max="10" required>
+
+        <label>Noise Level (TTI):</label>
+        <p>0 = No noise, 10 = Very noisy environment</p>
+        <input type="number" name="noise_level" min="0" max="10" required>
+
+        <label>Future Career Concerns (FCPB):</label>
+        <p>0 = No worries, 10 = Constant worry about the future</p>
+        <input type="number" name="future_career_concerns" min="0" max="10" required>
+
+        <label>Social Support (EES):</label>
+        <p>0 = No support, 10 = Strong social support</p>
+        <input type="number" name="social_support" min="0" max="10" required>
+
+        <label>Peer Pressure (PIS):</label>
+        <p>0 = No peer pressure, 10 = Extreme peer pressure</p>
+        <input type="number" name="peer_pressure" min="0" max="10" required>
+
+        <button type="submit">Predict Anxiety Level</button>
+    </form>
+</body>
+</html>

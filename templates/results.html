@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anxiety Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background: linear-gradient(#87CEFA);
+            text-align: center;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .result-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        h2 {
+            color: #007BFF;
+        }
+        .low {
+            color: green;
+        }
+        .medium {
+            color: orange;
+        }
+        .high {
+            color: red;
+        }
+    </style>
+    <script>
+        // Redirect logic based on severity and age
+        window.onload = function() {
+            var severity = "{{ severity }}";
+            var age = parseInt("{{ age }}");
+
+            if (severity === "Healthy") {
+                alert("You are healthy. No appointment needed.");
+                window.location.href = "{{ url_for('home') }}";
+            } else if (severity === "High") {
+                if (age < 16) {
+                    alert("You are under 16. Redirecting to child psychologist appointment.");
+                    window.location.href = "{{ url_for('appointment_child') }}";
+                } else {
+                    alert("Appointment is needed. Redirecting...");
+                    window.location.href = "{{ url_for('appointment_high') }}";
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="result-box">
+        <h2>Anxiety Prediction Result</h2>
+        <p>Your predicted anxiety score: <strong>{{ prediction }}</strong></p>
+        <p>Your anxiety severity level: 
+            <strong class="{{ 'low' if severity == 'Healthy' else 'medium' if severity == 'Medium' else 'high' }}">
+                {{ severity }}
+            </strong>
+        </p>
+    </div>
+
+    {% if severity == "Medium" %}
+    <div>
+        {% if age < 16 %}
+            <p>You are under 16. Redirecting to child psychologist appointment.</p>
+            <script> window.location.href = "{{ url_for('appointment_child') }}"; </script>
+        {% else %}
+            <p>You may take an appointment.</p>
+            <a href="{{ url_for('appointment_low_medium') }}">
+                <button>Book Appointment</button>
+            </a>
+        {% endif %}
+    </div>
+    {% endif %}
+</body>
+</html>

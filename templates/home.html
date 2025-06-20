@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BearCare Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='logo.png') }}">
+
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="" width="100" style="height: 100px; vertical-align: middle;">
+        </h1>
+        <nav style="flex-grow: 1; text-align: right; padding: 10px 0;">
+            <a href="#anxiety" 
+            style="margin: 0 10px; padding: 8px 14px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-size: 16px; color: #ffffff; background-color: #007acc; border-radius: 25px; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; text-align: center;">               Anxiety Score
+            </a>
+            <a href="#Music" 
+            style="margin: 0 10px; padding: 8px 14px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-size: 16px; color: #ffffff; background-color: #007acc; border-radius: 25px; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; text-align: center;">                Music
+            </a>
+            <a href="{{ url_for('yoga') }}" 
+            style="margin: 0 10px; padding: 8px 14px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-size: 16px; color: #ffffff; background-color: #007acc; border-radius: 25px; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; text-align: center;">                Stretching Exercises
+            </a>
+            <a href="{{ url_for('breathing') }}" 
+            style="margin: 0 10px; padding: 8px 14px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-size: 16px; color: #ffffff; background-color: #007acc; border-radius: 25px; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; text-align: center;">                Breathing Exercises
+            </a>
+            <a href="{{ url_for('login') }}" 
+            style="margin: 0 10px; padding: 8px 14px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-size: 16px; color: #ffffff; background-color: #d9534f; border-radius: 25px; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; text-align: center;">
+                Logout
+            </a>
+        </nav>
+
+
+        </header>
+        
+    </header>
+    
+    <main>
+<section id="anxiety" class="welcome">
+    <p style="font-size: 28px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #3a7bd5; font-weight: bold; margin-bottom: 10px;">
+        Welcome, {{ session.get('name', 'Guest') }}!
+    </p>
+    <p style="font-size: 18px; font-family: Arial, sans-serif; color: #444;">
+        Take a deep breath—you're doing great. Don't forget to check your prediction score and take a step toward self-care!
+    </p>
+    <p>
+        <a href="{{ url_for('form') }}">
+            <div class="mood-buttons">
+                <button class="action-buttons">prediction score</button>
+            </div>
+        </a>
+    </p>
+</section>
+
+
+                <section id="Music" class="welcome">
+            <h2>Listen to Music Here</h2>
+            <p>Listen to Music Tailored to Your Mood and Feel Better Instantly!</p>
+
+            <!-- Mood Buttons with spacing -->
+            <div class="mood-buttons" style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 20px;">
+                <button onclick="playMusic('calm')">😊 Calm</button>
+                <button onclick="playMusic('happy')">😀 Happy</button>
+                <button onclick="playMusic('anxious')">😟 Anxious</button>
+                <button onclick="playMusic('sad')">😢 Sad</button>
+                <button onclick="playMusic('stressed')">😖 Stressed</button>
+            </div>
+
+            <!-- Play Buttons with spacing and alignment -->
+            <div class="play-buttons" style="background-color: #e6f7ff; padding: 15px; border-radius: 40px; display: flex; align-items: center; justify-content: center; gap: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+                <label for="speed" style="font-weight: bold; font-family: 'Segoe UI', sans-serif; color: #005b8f;">Speed:</label>
+
+                <select id="speed" onchange="changeSpeed()" style="padding: 6px 10px; border-radius: 6px; border: 1px solid #007acc; background-color: #ffffff; color: #005b8f; font-family: 'Segoe UI', sans-serif;">
+                    <option value="0.5">0.5x</option>
+                    <option value="1" selected>1x (Normal)</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                </select>
+
+                <button id="togglePlayPause" onclick="togglePlayPause()" style="background-color: #ffffff; color: #007acc; border: 2px solid #007acc; padding: 8px 16px; border-radius: 6px; font-size: 16px; cursor: pointer; font-family: 'Segoe UI', sans-serif;">
+                    ▶ Play
+                </button>
+
+            </div>
+
+            <audio id="audio-player"></audio>
+        </section>
+
+        
+ 
+        
+        <audio id="audio-player"></audio>
+        
+        <script>
+            var audio = document.getElementById("audio-player");
+            var playPauseBtn = document.getElementById("togglePlayPause");
+
+            var musicFiles = {
+                "calm": "static/music/calm.mp3",
+                "happy": "static/music/happy.mp3",
+                "anxious": "static/music/anxious.mp3",
+                "sad": "static/music/sad.mp3",
+                "stressed": "static/music/stressed.mp3"
+            };
+
+            function playMusic(mood) {
+                if (musicFiles[mood]) {
+                    audio.src = musicFiles[mood];
+                    audio.play();
+                    playPauseBtn.innerHTML = "⏸ Pause";
+                }
+            }
+
+            function togglePlayPause() {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.innerHTML = "⏸ Pause";
+                } else {
+                    audio.pause();
+                    playPauseBtn.innerHTML = "▶ Play";
+                }
+            }
+
+            function changeSpeed() {
+                var speed = document.getElementById("speed").value;
+                audio.playbackRate = parseFloat(speed);
+            }
+
+            // Optional: Automatically update button when audio ends
+            audio.addEventListener('ended', function () {
+                playPauseBtn.innerHTML = "▶ Play";
+            });
+
+            document.querySelectorAll('nav a').forEach(a => {
+                a.addEventListener('mouseenter', () => {
+                    a.style.backgroundColor = '#005b8f';
+                });
+                a.addEventListener('mouseleave', () => {
+                    a.style.backgroundColor = (a.textContent.trim() === "Logout") ? "#d9534f" : "#007acc";
+                });
+            });
+        </script>
+
+        
+
+        <section class="welcome">
+            <h3>Click image for Gentle stretching</h3>
+            <p> </p>
+            <a href="{{ url_for('yoga') }}" >
+                <img src="{{ url_for('static', filename='yoga.jpg') }}" alt="Clickable Image" width="300">
+            </a>
+        </section>
+
+        <!-- <section class="welcome">
+            <h3>Today's Self-Care Suggestions</h3>
+            <div class="suggestion-box">
+                <div>
+                    <p>✏️ <b>Journal your thoughts</b></p>
+                    <p>Take 5 minutes to write down what's on your mind. No judgment, just release.</p>
+                    <a href="#">Try now →</a>
+                </div>
+            </div>
+        </section> -->
+
+        <section class="welcome">
+            <h3>Click image for Breathing Exercise</h3>
+            <a href="{{ url_for('breathing') }}" >
+                <img src="{{ url_for('static', filename='human_breathing.jpg') }}" alt="Clickable Image" width="200">
+            </a>
+        </section>
+
+        <section id="about-us" class="welcome" style="text-align: center; padding: 40px 20px;">
+    <h2 style="font-size: 28px; font-family: 'Segoe UI', sans-serif; color: #3a7bd5; margin-bottom: 30px;">About Us</h2>
+    <div class="card-container" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+        
+        <!-- Developer 1 -->
+        <article class="card">
+            <div class="card-img">
+                <img src="{{ url_for('static', filename='dev1.jpg') }}" alt="Developer 1" class="card-imgs">
+            </div>
+            <div class="project-info">
+                <div class="flex">
+                    <div class="project-title">Tarunya</div>
+                    <span class="tag">Frontend</span>
+                </div>
+                <span class="lighter">UI/UX and user interaction. Built the music and mood interface.</span>
+            </div>
+        </article>
+
+        <!-- Developer 2 -->
+        <article class="card">
+            <div class="card-img">
+                <img src="{{ url_for('static', filename='dev2.jpg') }}" alt="Developer 2" class="card-imgs">
+            </div>
+            <div class="project-info">
+                <div class="flex">
+                    <div class="project-title">Sneha</div>
+                    <span class="tag">Backend</span>
+                </div>
+                <span class="lighter">Flask server, database integration, and authentication logic.</span>
+            </div>
+        </article>
+
+        <!-- Developer 3 -->
+        <article class="card">
+            <div class="card-img">
+                <img src="{{ url_for('static', filename='dev3.png') }}" alt="Developer 3" class="card-imgs">
+            </div>
+            <div class="project-info">
+                <div class="flex">
+                    <div class="project-title">Jyoshitha</div>
+                    <span class="tag">ML/AI</span>
+                </div>
+                <span class="lighter">Developed the mood prediction model and music mapping logic.</span>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+    </main>
+    
+    <script src="script.js"></script>
+    <!-- Back to Top Button -->
+<button class="button" id="backToTop" onclick="scrollToTop()" title="Back to Top">
+  <svg class="svgIcon" viewBox="0 0 384 512">
+    <path d="M214.6 105.4l144 144c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L192 173.3 59.3 283.3c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l144-144c9.4-9.4 24.6-9.4 34.2 0z"/>
+  </svg>
+</button>
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Optional: Hide/show button based on scroll position
+  window.addEventListener('scroll', function () {
+    const btn = document.getElementById('backToTop');
+    if (window.scrollY > 200) {
+      btn.style.display = 'flex';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+
+  // Initialize hidden
+  document.getElementById('backToTop').style.display = 'none';
+</script>
+
+</body>
+</html>

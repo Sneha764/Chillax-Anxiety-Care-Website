@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy</title>
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{ url_for('home') }}";
+        }, 3000);
+    </script>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; padding: 20px; }
+        .message { font-size: 20px; color: green; }
+    </style>
+</head>
+<body>
+    <h2 class="message">You are Healthy! No appointment needed.</h2>
+    <p>Redirecting to Home Page...</p>
+</body>
+</html>

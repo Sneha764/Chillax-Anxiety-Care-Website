@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment for high severity</title>
+    <link rel="stylesheet" href="styles_doctor.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_doctor.css') }}">
+
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="navbar" style="
+            list-style: none; 
+            margin: 0; 
+            padding: 10px 20px; 
+            display: flex; 
+            justify-content: flex-start; 
+            background-color: #3b5f77;
+            border-radius:20px;
+        ">
+            <li style="margin: 0 15px;">
+                <a href="{{ url_for('home') }}" style="
+                    color: white; 
+                    text-decoration: none; 
+                    font-size: 24px; 
+                    font-weight: bold;
+                    font-family: 'Segoe UI', sans-serif;
+                ">
+                    Home Page
+                </a>
+            </li>
+        </ul>
+        </nav>
+        
+        <h1>🩺 Book Your Appointment</h1>
+    </header>
+
+    <main>
+        <p>Choose a doctor and book your appointment with ease.</p>
+
+        <div class="doctor-list">
+            <div class="doctor-card">
+      
+                <h2>Dr. Sarah Johnson</h2>
+                <p>Psychologist | 10+ years of experience</p>
+                <a href="https://www.nimh.nih.gov/health/topics/anxiety-disorders">Book Now</a>
+            </div>
+
+            <div class="doctor-card">
+
+                <h2>Dr. James Carter</h2>
+                <p>Psychiatrist | Specializes in anxiety & stress</p>
+                <a href="https://www.nimh.nih.gov/health/topics/anxiety-disorders">Book Now</a>
+            </div>
+
+            <div class="doctor-card">
+       
+                <h2>Dr. Emily Davis</h2>
+                <p>Child Psychologist | Expert in adolescent therapy</p>
+                <a href="https://www.nimh.nih.gov/health/topics/anxiety-disorders">Book Now</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Need help? Contact us at <a href="mailto:pcos.sjst@gmail.com">pcos.sjst@gmail.com</a></p>
+    </footer>
+</body>
+</html>

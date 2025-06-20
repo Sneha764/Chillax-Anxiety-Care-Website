@@ -1,0 +1,98 @@
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: #f0f8ff; /* Light baby blue */
+    color: #444;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #a2d5f2; /* Soft blue */
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    border-bottom: 5px dashed #77dd77; /* Soft green accent */
+}
+
+header h1 {
+    font-size: 32px;
+    margin-top: 10px;
+    color: #fff;
+}
+
+.navbar {
+    background-color: #77dd77; /* Soft green */
+}
+
+.navbar li a {
+    color: #fff !important;
+    font-size: 26px !important;
+}
+
+main {
+    text-align: center;
+    padding: 30px;
+}
+
+.doctor-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.doctor-card {
+    background: #fffbea; /* Creamy yellow */
+    border: 4px dotted #f7cac9; /* Soft pink accent */
+    border-radius: 20px;
+    padding: 20px;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.doctor-card:hover {
+    transform: scale(1.05);
+}
+
+.doctor-card img {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    border: 3px solid #e0e0e0;
+}
+
+.doctor-card h2 {
+    color: #66b3ba; /* Calm teal */
+}
+
+.doctor-card p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.doctor-card a {
+    display: inline-block;
+    margin-top: 10px;
+    background: #ffb347; /* Light orange */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.doctor-card a:hover {
+    background: #f08080; /* Warm coral */
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #d3f8e2; /* Soft mint */
+    font-size: 14px;
+    color: #333;
+}

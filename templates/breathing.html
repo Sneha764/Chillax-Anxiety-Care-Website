@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breathing Exercise</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f4f8fb;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        margin: 40px auto;
+        width: 70%; /* Increased from 50% */
+        background: white;
+        padding: 40px; /* More padding */
+        border-radius: 16px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    .breath-animation {
+        width: 200px; /* Bigger */
+        height: 200px;
+        background: url('/static/human_breathing.jpg') no-repeat center;
+        background-size: cover;
+        margin: 30px auto;
+        transition: transform 4s ease-in-out;
+    }
+    .expand {
+        transform: scale(1.3); /* More dramatic effect */
+    }
+    .timer {
+        font-size: 24px; /* Bigger timer */
+        margin: 20px 0;
+        font-weight: bold;
+    }
+    .controls button {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 14px 28px; /* Bigger buttons */
+        font-size: 18px;
+        margin: 8px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .controls button:hover {
+        background-color: #357ab7;
+    }
+    .controls button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+    h1 {
+            color: #4CAF50;
+    }
+    /* From Uiverse.io by gharsh11032000 */ 
+.animated-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 36px;
+  border: 4px solid;
+  border-color: transparent;
+  font-size: 16px;
+  background-color: inherit;
+  border-radius: 100px;
+  font-weight: 600;
+  color: rgb(0, 0, 0);
+  box-shadow: 0 0 0 2px rgb(0, 0, 0);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button svg {
+  position: absolute;
+  width: 24px;
+  fill: rgb(0, 0, 0);
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .arr-1 {
+  right: 16px;
+}
+
+.animated-button .arr-2 {
+  left: -25%;
+}
+
+.animated-button .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: greenyellow;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .text {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-12px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button:hover {
+  box-shadow: 0 0 0 12px transparent;
+  color: #212121;
+  border-radius: 12px;
+}
+
+.animated-button:hover .arr-1 {
+  right: -25%;
+}
+
+.animated-button:hover .arr-2 {
+  left: 16px;
+}
+
+.animated-button:hover .text {
+  transform: translateX(12px);
+}
+
+.animated-button:hover svg {
+  fill: #212121;
+}
+
+.animated-button:active {
+  scale: 0.95;
+  box-shadow: 0 0 0 4px greenyellow;
+}
+
+.animated-button:hover .circle {
+  width: 220px;
+  height: 220px;
+  opacity: 1;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>Breathing Exercise</h1>
+    <p>Follow the animated human to regulate your breathing. Inhale as it expands, exhale as it contracts.</p>
+    <div class="breath-animation" id="breath"></div>
+    <p class="timer" id="timer">5:00</p>
+    <div class="controls">
+        <button id="startBtn">Start</button>
+        <button id="pauseBtn" disabled>Pause</button>
+        <button id="resetBtn">Reset</button>
+    </div>
+</div>
+
+<!-- From Uiverse.io by gharsh11032000 --> 
+<div style="display: flex; justify-content: center;">
+  <a href="{{ url_for('home') }}" style="text-decoration: none;">
+    <button class="animated-button">
+      <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+        ></path>
+      </svg>
+      <span class="text">Back to Home</span>
+      <span class="circle"></span>
+      <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+        ></path>
+      </svg>
+    </button>
+  </a>
+</div>
+
+
+<script>
+    let interval, countdown;
+    let timeLeft = 300; // 5 minutes
+    const breathElement = document.getElementById("breath");
+    const timerElement = document.getElementById("timer");
+    const startBtn = document.getElementById("startBtn");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function startBreathing() {
+        startBtn.disabled = true;
+        pauseBtn.disabled = false;
+        
+        interval = setInterval(() => {
+            breathElement.classList.toggle("expand");
+        }, 4000); // Expand & contract every 4 seconds
+        
+        startTimer();
+    }
+
+    function startTimer() {
+        countdown = setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerElement.innerText = `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+            } else {
+                clearInterval(countdown);
+                clearInterval(interval);
+                alert("Great job! You've completed your breathing exercise.");
+                resetBreathing();
+            }
+        }, 1000);
+    }
+
+    function pauseBreathing() {
+        clearInterval(interval);
+        clearInterval(countdown);
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+    }
+
+    function resetBreathing() {
+        clearInterval(interval);
+        clearInterval(countdown);
+        timeLeft = 300;
+        timerElement.innerText = "5:00";
+        breathElement.classList.remove("expand");
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+    }
+
+    startBtn.addEventListener("click", startBreathing);
+    pauseBtn.addEventListener("click", pauseBreathing);
+    resetBtn.addEventListener("click", resetBreathing);
+</script>
+
+</body>
+</html>
