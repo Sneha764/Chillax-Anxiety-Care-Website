@@ -41,14 +41,12 @@ Project_Folder/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/Chillax.git
-cd Chillax
+git clone https://github.com/Sneha764/Chillax-Anxiety-Care-Website.git
+cd Chillax-Anxiety-Care-Website
 
 # Install dependencies
-pip install -r Requirements.txt
+pip install -r requirements.txt
 
 # Run the application
 python combined.py
 ```
-
-Then, visit http://127.0.0.1:5000 in your browser.
